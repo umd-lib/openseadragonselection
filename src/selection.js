@@ -341,10 +341,17 @@
                 oldRect = this.rect.clone();
             }
             if (this.rectDone) {
+                // disable rotate
+                this.rect.x += delta.x;
+                this.rect.y += delta.y;
+                if (this.restrictToImage && !this.rect.fitsIn(new $.Rect(0, 0, 1, 1))) {
+                    this.rect.x -= delta.x;
+                    this.rect.y -= delta.y;
+                }
                 // rotate
-                var angle1 = this.rect.getAngleFromCenter(start);
-                var angle2 = this.rect.getAngleFromCenter(end);
-                this.rect.rotation = (this.rect.rotation + angle1 - angle2) % Math.PI;
+                // var angle1 = this.rect.getAngleFromCenter(start);
+                // var angle2 = this.rect.getAngleFromCenter(end);
+                // this.rect.rotation = (this.rect.rotation + angle1 - angle2) % Math.PI;
             } else {
                 if (this.startRotated) {
                     this.rect = getPrerotatedRect(this.rotatedStartPoint, end, this.startRotatedHeight);
